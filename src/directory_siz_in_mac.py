@@ -23,6 +23,11 @@ def human_readable_size(size, decimal_places=2):
 
 def list_folders_with_size(path='.'):
     """List all folders in the path with their size."""
+    path = os.path.expanduser(path)  # Expand ~ to the full home directory path
+    path = os.path.abspath(path)    # Convert relative paths to absolute paths
+    if not os.path.exists(path):
+        print(f"Error: The path '{path}' does not exist.")
+        return
     for entry in os.scandir(path):
         if entry.is_dir():
             folder_size = get_size(entry.path)
